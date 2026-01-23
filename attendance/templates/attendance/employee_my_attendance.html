@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Attendance</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .badge-present {
+            background-color: #28a745;
+        }
+        .badge-absent {
+            background-color: #dc3545;
+        }
+        .badge-leave {
+            background-color: #ffc107;
+            color: #000;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>📅 My Attendance</h3>
+        <a href="/dashboard/employee/" class="btn btn-outline-secondary">
+            ⬅ Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Attendance Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            {% if records %}
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rec in records %}
+                    <tr>
+                        <td>{{ rec.date }}</td>
+                        <td>
+                            {% if rec.status == "PRESENT" %}
+                                <span class="badge badge-present">✔ Present</span>
+                            {% elif rec.status == "ABSENT" %}
+                                <span class="badge badge-absent">✖ Absent</span>
+                            {% else %}
+                                <span class="badge badge-leave">⚠ Leave</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <div class="alert alert-info text-center">
+                    No attendance records found.
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

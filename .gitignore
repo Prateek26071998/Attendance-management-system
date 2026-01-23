@@ -1,41 +1,13 @@
-# ============================
-# Django backend (ignore)
-# ============================
-
-# Django project files
-attendance/
-core/
-manage.py
-db.sqlite3
-
-# Collected static files (CRITICAL)
-staticfiles/
-
-# ============================
-# Accounts app
-# Ignore backend code but allow frontend UI
-# ============================
-
-accounts/*
-!accounts/templates/
-!accounts/templates/accounts/
-!accounts/templates/accounts/frontend/
-!accounts/templates/accounts/frontend/**
-
-# ============================
 # Python
-# ============================
-
 venv/
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
 
-# ============================
+# Django
+db.sqlite3
+staticfiles/
+
 # OS / Editor
-# ============================
-
 .vscode/
 .DS_Store
 Thumbs.db
