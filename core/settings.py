@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # Your apps
+    # Project apps
     "accounts",
     "attendance",
 ]
@@ -63,11 +63,17 @@ MIDDLEWARE = [
 # --------------------------------------------------
 ROOT_URLCONF = "core.urls"
 
+# ✅ DJANGO TEMPLATE ENGINE (THIS IS WHAT YOUR BOSS ASKED FOR)
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
+
+        # Optional global templates folder (safe to keep)
         "DIRS": [BASE_DIR / "templates"],
+
+        # 🔥 CRITICAL: enables templates inside apps (accounts/templates/)
         "APP_DIRS": True,
+
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -124,13 +130,16 @@ USE_TZ = True
 
 
 # --------------------------------------------------
-# STATIC FILES (CRITICAL FOR RENDER)
+# STATIC FILES
 # --------------------------------------------------
 STATIC_URL = "/static/"
 
+# Render requires this
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 
 # --------------------------------------------------
@@ -138,4 +147,25 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # --------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# --------------------------------------------------
+# CUSTOM USER MODEL
+# --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
+# --------------------------------------------------
+# AUTO CREATE ADMIN USER (RENDER ONLY)
+# --------------------------------------------------
+if os.environ.get("RENDER") == "true":
+    try:
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+
+        if not User.objects.filter(username="admin").exists():
+            User.objects.create_superuser(
+                username="admin",
+                email="admin@example.com",
+                password="admin123"
+            )
+            print("✅ Render admin user created")
+    except Exception as e:
+        print("❌ Admin creation skipped:", e)
