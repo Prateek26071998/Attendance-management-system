@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Project apps
-    "accounts",
+    "accounts.apps.AccountsConfig",
     "attendance",
 ]
 
@@ -152,20 +152,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # CUSTOM USER MODEL
 # --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
-# --------------------------------------------------
-# AUTO CREATE ADMIN USER (RENDER ONLY)
-# --------------------------------------------------
-if os.environ.get("RENDER") == "true":
-    try:
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
 
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser(
-                username="admin",
-                email="admin@example.com",
-                password="admin123"
-            )
-            print("✅ Render admin user created")
-    except Exception as e:
-        print("❌ Admin creation skipped:", e)
