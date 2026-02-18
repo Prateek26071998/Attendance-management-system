@@ -91,12 +91,27 @@ WSGI_APPLICATION = "core.wsgi.application"
 # --------------------------------------------------
 # DATABASE
 # --------------------------------------------------
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-    )
-}
+# --------------------------------------------------
+# DATABASE CONFIGURATION
+# --------------------------------------------------
+
+if os.environ.get("RENDER") == "true":
+    # Render / Production → PostgreSQL
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # Local development → SQLite
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
 
 
 # --------------------------------------------------
