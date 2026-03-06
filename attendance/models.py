@@ -3,16 +3,30 @@ from accounts.models import User
 
 
 class Attendance(models.Model):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
+    employee = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="attendance_records"
+    )
+
+    date = models.DateField(auto_now_add=True)
+
     status = models.CharField(
         max_length=10,
-        choices=[("Present", "Present"), ("Absent", "Absent")],
-        default="Present"
+        choices=[
+            ("PRESENT", "Present"),
+            ("ABSENT", "Absent"),
+        ],
+        default="PRESENT"
     )
 
     class Meta:
-        #unique_together = ("employee", "date")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["employee", "date"],
+                name="unique_attendance_per_day"
+            )
+        ]
 
     def __str__(self):
         return f"{self.employee.email} - {self.date} - {self.status}"
