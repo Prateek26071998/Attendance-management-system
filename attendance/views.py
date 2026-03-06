@@ -19,17 +19,20 @@ def hr_attendance(request):
         emp_id = request.POST.get("employee")
         status = request.POST.get("status")
 
-        # Prevent duplicate attendance
-        attendance, created = Attendance.objects.get_or_create(
+        # check duplicate attendance
+        already_marked = Attendance.objects.filter(
             employee_id=emp_id,
-            date=today,
-            defaults={"status": status}
-        )
+            date=today
+        ).exists()
 
-        if created:
-            messages.success(request, "Attendance marked successfully ✅")
+        if already_marked:
+            messages.error(request, "Attendance already marked for this employee today!")
         else:
-            messages.warning(request, "Attendance already marked for today ⚠️")
+            Attendance.objects.create(
+                employee_id=emp_id,
+                status=status
+            )
+            messages.success(request, "Attendance marked successfully!")
 
         return redirect("/hr/attendance/")
 
