@@ -20,8 +20,5 @@ class Attendance(models.Model):
         default="PRESENT"
     )
 
-    class Meta:
-     pass
-
     def __str__(self):
         return f"{self.employee.email} - {self.date} - {self.status}"
