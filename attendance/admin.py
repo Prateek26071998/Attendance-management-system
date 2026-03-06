@@ -3,5 +3,5 @@ from .models import Attendance
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "date", "status")
+    list_display = ("id", "employee", "date", "status")
     list_filter = ("status", "date")

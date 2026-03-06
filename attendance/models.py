@@ -1,18 +1,18 @@
-from django.conf import settings
 from django.db import models
+from accounts.models import User
+
 
 class Attendance(models.Model):
-    STATUS_CHOICES = (
-        ("PRESENT", "Present"),
-        ("ABSENT", "Absent"),
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(
+        max_length=10,
+        choices=[("Present", "Present"), ("Absent", "Absent")],
+        default="Present"
     )
 
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    date = models.DateField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    class Meta:
+        unique_together = ("employee", "date")
 
     def __str__(self):
-        return f"{self.user.email} - {self.date} - {self.status}"
+        return f"{self.employee.email} - {self.date} - {self.status}"
