@@ -12,7 +12,7 @@ class Attendance(models.Model):
     )
 
     class Meta:
-        unique_together = ("employee", "date")
+        #unique_together = ("employee", "date")
 
     def __str__(self):
         return f"{self.employee.email} - {self.date} - {self.status}"
