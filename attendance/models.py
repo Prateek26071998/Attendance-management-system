@@ -21,12 +21,7 @@ class Attendance(models.Model):
     )
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["employee", "date"],
-                name="unique_attendance_per_day"
-            )
-        ]
+     pass
 
     def __str__(self):
         return f"{self.employee.email} - {self.date} - {self.status}"
