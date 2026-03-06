@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get(
     "django-insecure-dev-only-change-this"
 )
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -95,23 +95,23 @@ WSGI_APPLICATION = "core.wsgi.application"
 # DATABASE CONFIGURATION
 # --------------------------------------------------
 
-if os.environ.get("RENDER") == "true":
-    # Render / Production → PostgreSQL
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
     DATABASES = {
-        "default": dj_database_url.config(
+        "default": dj_database_url.parse(
+            DATABASE_URL,
             conn_max_age=600,
             ssl_require=True
         )
     }
 else:
-    # Local development → SQLite
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
 
 
 # --------------------------------------------------
