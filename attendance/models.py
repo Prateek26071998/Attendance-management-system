@@ -12,13 +12,13 @@ class Attendance(models.Model):
     date = models.DateField(auto_now_add=True)
 
     status = models.CharField(
-        max_length=10,
-        choices=[
-            ("PRESENT", "Present"),
-            ("ABSENT", "Absent"),
-        ],
-        default="PRESENT"
-    )
+    max_length=10,
+    choices=[
+        ("PRESENT", "Present"),
+        ("ABSENT", "Absent"),
+        ("LATE", "Late"),
+    ]
+)
 
     def __str__(self):
         return f"{self.employee.email} - {self.date} - {self.status}"

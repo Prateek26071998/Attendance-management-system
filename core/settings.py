@@ -95,23 +95,16 @@ WSGI_APPLICATION = "core.wsgi.application"
 # DATABASE CONFIGURATION
 # --------------------------------------------------
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True
-        )
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "techwin_attenda",
+        "USER": "techwin_attenda",
+        "PASSWORD": "prateek@tws",
+        "HOST": "207.180.198.185",
+        "PORT": "3306",
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
 
 
 # --------------------------------------------------
