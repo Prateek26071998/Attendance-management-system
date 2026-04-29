@@ -98,11 +98,14 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "techwin_attenda",
-        "USER": "techwin_attenda",
-        "PASSWORD": "prateek@tws",
-        "HOST": "207.180.198.185",
-        "PORT": "3306",
+        "NAME": os.environ.get("DB_NAME", "techwin_attenda"),
+        "USER": os.environ.get("DB_USER", "techwin_attenda"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "prateek@tws"),
+        "HOST": os.environ.get("DB_HOST", "207.180.198.185"),
+        "PORT": os.environ.get("DB_PORT", "3306"),
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
