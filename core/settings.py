@@ -11,18 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------------------------------------
 # SECURITY
 # --------------------------------------------------
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-dev-only-change-this"
-)
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    ".onrender.com",
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # --------------------------------------------------
@@ -163,4 +156,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # CUSTOM USER MODEL
 # --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
