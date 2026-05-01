@@ -7,10 +7,18 @@ class AccountsConfig(AppConfig):
 
     def ready(self):
         import os
+        import sys
 
-        if os.environ.get("RENDER") == "true":
+        # Run only on Render
+        if os.environ.get("RENDER") != "true":
+            return
+
+        # Prevent running during migrations
+        if "migrate" in sys.argv:
+            return
+
+        try:
             from django.contrib.auth import get_user_model
-
             User = get_user_model()
 
             if not User.objects.filter(username="admin").exists():
@@ -20,3 +28,6 @@ class AccountsConfig(AppConfig):
                     password="Admin@123"
                 )
                 print("✅ Admin user auto-created on Render")
+
+        except Exception as e:
+            print("Admin auto-create skipped:", e)
