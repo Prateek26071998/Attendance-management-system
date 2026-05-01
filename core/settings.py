@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-
+from django.contrib.auth import get_user_model
 # --------------------------------------------------
 # BASE DIRECTORY
 # --------------------------------------------------
@@ -157,3 +157,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+
+
+if os.environ.get("RENDER") == "true":
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@gmail.com",
+            password="Admin@123"
+        )
+        print("✅ Admin user auto-created on Render")
