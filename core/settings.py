@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-from django.contrib.auth import get_user_model
+
 # --------------------------------------------------
 # BASE DIRECTORY
 # --------------------------------------------------

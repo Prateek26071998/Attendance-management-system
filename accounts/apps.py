@@ -9,7 +9,7 @@ class AccountsConfig(AppConfig):
         import os
         import sys
 
-        # Run only on Render
+        # Run only on Render server
         if os.environ.get("RENDER") != "true":
             return
 
