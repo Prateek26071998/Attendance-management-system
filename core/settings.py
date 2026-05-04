@@ -156,4 +156,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # CUSTOM USER MODEL
 # --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
