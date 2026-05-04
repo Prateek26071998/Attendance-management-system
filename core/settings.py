@@ -15,7 +15,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "attendance-management-system-k6xc.onrender.com"
+]
 
 
 # --------------------------------------------------
@@ -157,3 +159,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # --------------------------------------------------
 AUTH_USER_MODEL = "accounts.User"
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://attendance-management-system-k6xc.onrender.com"
+]
