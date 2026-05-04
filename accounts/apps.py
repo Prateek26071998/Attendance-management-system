@@ -21,13 +21,21 @@ class AccountsConfig(AppConfig):
             from django.contrib.auth import get_user_model
             User = get_user_model()
 
-            if not User.objects.filter(username="admin").exists():
-                User.objects.create_superuser(
-                    username="admin",
-                    email="admin@gmail.com",
-                    password="Admin@123"
-                )
-                print("✅ Admin user auto-created on Render")
+            users_data = [
+                {"username": "HR", "password": "Hr@12345", "role": "HR"},
+                {"username": "EMPLOYEE1", "password": "Emp1@12345", "role": "EMPLOYEE"},
+                {"username": "EMPLOYEE2", "password": "Emp2@12345", "role": "EMPLOYEE"},
+                {"username": "EMPLOYEE3", "password": "Emp3@12345", "role": "EMPLOYEE"},
+            ]
+
+            for user_data in users_data:
+                if not User.objects.filter(username=user_data["username"]).exists():
+                    user = User.objects.create_user(
+                        username=user_data["username"],
+                        password=user_data["password"],
+                        role=user_data["role"]
+                    )
+                    print(f"✅ Created user: {user.username}")
 
         except Exception as e:
-            print("Admin auto-create skipped:", e)
+            print("User auto-create skipped:", e)
